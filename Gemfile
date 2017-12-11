@@ -164,7 +164,11 @@ group :replication, :manageiq_default do
 end
 
 group :rest_api, :manageiq_default do
-  manageiq_plugin "manageiq-api"
+  # manageiq_plugin "manageiq-api"
+  plugin_name = "manageiq-api"
+  unless dependencies.detect { |d| d.name == plugin_name }
+    gem plugin_name, :git => "https://github.com/abellotti/#{plugin_name}", :branch => "support_openid_connect_with_api"
+  end
 end
 
 group :scheduler, :manageiq_default do
@@ -185,7 +189,11 @@ group :consumption, :manageiq_default do
 end
 
 group :ui_dependencies do # Added to Bundler.require in config/application.rb
-  manageiq_plugin "manageiq-ui-classic"
+  # manageiq_plugin "manageiq-ui-classic"
+  plugin_name = "manageiq-ui-classic"
+  unless dependencies.detect { |d| d.name == plugin_name }
+    gem plugin_name, :git => "https://github.com/jvlcek/#{plugin_name}", :branch => "openidc"
+  end
   # Modified gems (forked on Github)
   gem "jquery-rjs",                   "=0.1.1",                       :git => "https://github.com/ManageIQ/jquery-rjs.git", :tag => "v0.1.1-1"
 end
